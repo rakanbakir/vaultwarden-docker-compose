@@ -7,7 +7,8 @@ services:
     ports:
      - 9445:80 #map any custom port to use (replace 8445 not 80)
     volumes:
-     - ./bitwarden:/data:rw
+     - bitwarden:/data:rw
+     - ./ssl/:/ssl/
     environment:
      - ADMIN_TOKEN=${ADMIN_TOKEN}
      - WEBSOCKET_ENABLED=true
@@ -19,9 +20,12 @@ services:
      - SMTP_USERNAME=${SMTP_USERNAME}
      - SMTP_PASSWORD=${SMTP_PASSWORD}
      - DOMAIN=${DOMAIN}
+     - ROCKET_TLS={certs="/ssl/cert.pem",key="/ssl/key.pem"}
 
 #uncomment below network part if you are using Nginx Proxy Manager, or you can remove the same
 #networks:
 #  default:
 #    external:
 #      name: nginx-proxy-network
+volumes:
+  bitwarden:
